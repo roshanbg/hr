@@ -1,0 +1,22 @@
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <fa-icon
+    title="View"
+    [icon]="faEyeSlash"
+    (click)="onAction('view')"
+    class="mx-1 d-md-flex justify-content-md my-3"
+  ></fa-icon>
+
+  <fa-icon
+    title="Edit"
+    [icon]="faPenToSquare"
+    (click)="onAction('edit')"
+    class="mx-1 d-md-flex justify-content-md my-3"
+  ></fa-icon>
+
+  <fa-icon
+    title="Delete"
+    [icon]="faDeleteLeft"
+    (click)="onAction('delete')"
+    class="mx-1 d-md-flex justify-content-md my-3"
+  ></fa-icon>
+</div>

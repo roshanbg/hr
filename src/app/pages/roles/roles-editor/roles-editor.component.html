@@ -1,0 +1,38 @@
+<div class="card-header">
+  <div class="card-body">
+    <div [formGroup]="form">
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="form-label"
+            >Name @if (form.get('name')?.invalid) {
+            <span class="text-danger">*</span>
+            }
+          </label>
+          <input class="form-control" type="text" formControlName="name" />
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-end">
+          @if (isEditor()) {
+          <button
+            type="button"
+            class="btn btn-primary mx-1"
+            (click)="onSubmit()"
+            [disabled]="form.invalid"
+          >
+            Submit
+          </button>
+          }
+          <button
+            class="btn btn-primary mx-1"
+            type="button"
+            routerLink="/roles"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

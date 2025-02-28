@@ -1,0 +1,92 @@
+<div class="card-header">
+  <div class="card-body">
+    <div [formGroup]="form">
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="form-label"
+            >Name @if (form.get('name')?.invalid) {
+            <span class="text-danger">*</span>}
+          </label>
+          <input class="form-control" type="text" formControlName="name" />
+        </div>
+        <div class="col-6">
+          <label class="form-label"
+            >Email @if (form.get('email')?.invalid) {
+            <span class="text-danger">*</span>
+            }
+          </label>
+          <input class="form-control" type="text" formControlName="email" />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="form-label"
+            >Age @if
+            (form.get('age')?.invalid&&form.get('age')?.errors?.['min']&&form.get('age')?.touched)
+            {
+            <span class="text-danger">*</span>
+            }
+          </label>
+          <input
+            class="form-control"
+            type="number"
+            min="1"
+            formControlName="age"
+          />
+        </div>
+      </div>
+      @for (item of _rolesService.roles; track item) {
+      <div class="row">
+        <span>{{ item.name }}</span>
+        <div class="col-6">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="inlineFormCheck"
+              [checked]="isCheckboxChecked(item.id)"
+              (change)="productSelected(item.id)"
+            />
+            <label>Access</label>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="inlineFormCheck"
+              [checked]="isCheckboxChecked(item.id)"
+              (change)="productSelected(item.id)"
+            />
+            <label>Mange</label>
+          </div>
+        </div>
+      </div>
+
+      }
+      <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-end">
+          @if (isEditor()) {
+          <button
+            class="btn btn-primary mx-1"
+            type="button"
+            [disabled]="form.invalid"
+            (click)="onSubmit()"
+          >
+            Submit
+          </button>
+          }
+          <button
+            class="btn btn-primary mx-1"
+            type="button"
+            routerLink="/employees"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
