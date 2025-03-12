@@ -47,8 +47,10 @@ export class EmployeesListComponent implements OnInit {
 
   doSeach(event: any) {
     this.employees.set(
-      this._employeesService.employees.filter((e) =>
-        e.name.toLowerCase().includes(event.target.value.toLowerCase())
+      this._employeesService.employees.filter(
+        (e) =>
+          e.name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+          e.email.toLowerCase().includes(event.target.value.toLowerCase())
       )
     );
   }
