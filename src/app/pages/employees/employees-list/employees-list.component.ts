@@ -32,6 +32,10 @@ export class EmployeesListComponent {
         break;
       case 'delete':
         this._deleteItem(event.id);
+        break;
+      case 'reset':
+        this._resetItem(event.id);
+        break;
     }
   }
 
@@ -42,6 +46,16 @@ export class EmployeesListComponent {
 
     modalRef.result.then((e) => {
       if (e) this._confirmDelete(id);
+    });
+  }
+
+  private _resetItem(id: number): void {
+    const employee = this.employeesService.employees.find((e) => e.id === id);
+    if (!employee) return;
+
+    employee.roles.forEach((e) => {
+      e.allowAccess = false;
+      e.allowMange = false;
     });
   }
 
