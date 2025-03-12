@@ -57,6 +57,7 @@ export class EmployeesEditorComponent implements OnInit {
     if (!employee) return;
 
     this.form.patchValue(employee);
+    this._roles = employee.roles;
   }
 
   onSubmit(): void {
@@ -72,27 +73,54 @@ export class EmployeesEditorComponent implements OnInit {
     );
 
     if (index < 0) return;
-    this._employeesService.employees.splice(index, 1, this.form.getRawValue());
+    const form = this.form.getRawValue();
+    form.roles = this._roles;
+    this._employeesService.employees.splice(index, 1, form);
   }
   private _creat(): void {
     const form = this.form.getRawValue();
-
+    form.roles = this._roles;
     this._employeesService.employees.push(form);
   }
   private _roles: EmployeeRole[] = [];
 
-  productSelected(id: number) {
-    const productId = this._roles.find((e) => e.RoleId === id);
-    if (productId) this._roles = this._roles.filter((e) => e.RoleId !== id);
-    else
-      this._roles.push({ RoleId: id, allowAccess: false, allowMange: false });
+  accessSelected(id: number) {
+    const role = this._roles.find((e) => e.RoleId === id);
+    if (!role) {
+      this._roles.push({ RoleId: id, allowAccess: true, allowMange: false });
+    } else {
+      role.allowAccess = !role.allowAccess;
+    }
   }
 
-  isCheckboxChecked(id: number) {
-    return this._roles.includes({
-      RoleId: id,
-      allowAccess: false,
-      allowMange: false,
-    });
+  manageSelected(id: number) {
+    const role = this._roles.find((e) => e.RoleId === id);
+    if (!role) {
+      this._roles.push({ RoleId: id, allowAccess: false, allowMange: true });
+    } else {
+      role.allowMange = !role.allowMange;
+    }
+  }
+
+  // checkboxSelected(id: number, isAccess: boolean) {
+  //   const role = this._roles.find((e) => e.RoleId === id);
+  //   if (!role) {
+  //     this._roles.push({
+  //       RoleId: id,
+  //       allowAccess: isAccess ? true : false,
+  //       allowMange: !isAccess ? true : false,
+  //     });
+  //   } else {
+  //     isAccess
+  //       ? (role.allowAccess = !role.allowAccess)
+  //       : (role.allowMange = !role.allowMange);
+  //   }
+  // }
+
+  isCheckboxChecked(id: number, isAccess: boolean) {
+    const role = this._roles.find((e) => e.RoleId === id);
+    if (!role) return false;
+
+    return isAccess ? role.allowAccess : role.allowMange;
   }
 }

@@ -4,6 +4,7 @@ import {
   faDeleteLeft,
   faEyeSlash,
   faPenToSquare,
+  faRefresh,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -16,6 +17,8 @@ export class ToolsComponent {
   faPenToSquare = faPenToSquare;
   faEyeSlash = faEyeSlash;
   faDeleteLeft = faDeleteLeft;
+  // faTrashArrowUp = faTrashArrowUp;
+  faRefresh = faRefresh;
 
   itemId = input<number>();
   @Output() action = new EventEmitter<{

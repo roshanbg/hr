@@ -23,8 +23,11 @@
     "@angular/ssr": "^19.1.8",
     "@fortawesome/angular-fontawesome": "^0.15.0",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@ng-bootstrap/ng-bootstrap": "^18.0.0",
+    "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "express": "^4.18.2",
+    "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

@@ -44,8 +44,8 @@
               class="form-check-input"
               type="checkbox"
               id="inlineFormCheck"
-              [checked]="isCheckboxChecked(item.id)"
-              (change)="productSelected(item.id)"
+              [checked]="isCheckboxChecked(item.id, true)"
+              (change)="accessSelected(item.id)"
             />
             <label>Access</label>
           </div>
@@ -57,10 +57,10 @@
               class="form-check-input"
               type="checkbox"
               id="inlineFormCheck"
-              [checked]="isCheckboxChecked(item.id)"
-              (change)="productSelected(item.id)"
+              [checked]="isCheckboxChecked(item.id, false)"
+              (change)="manageSelected(item.id)"
             />
-            <label>Mange</label>
+            <label>Manage</label>
           </div>
         </div>
       </div>

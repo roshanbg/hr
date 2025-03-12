@@ -4,6 +4,9 @@ import { Router, RouterLink } from '@angular/router';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolsComponent } from '../../../components/tools/tools.component';
+import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationModalComponent } from '../../../components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-employees-list',
@@ -14,6 +17,8 @@ import { ToolsComponent } from '../../../components/tools/tools.component';
 export class EmployeesListComponent {
   employeesService = inject(EmployeesService);
   private _router = inject(Router);
+  private _modalService = inject(NgbModal);
+  private _toastr = inject(ToastrService);
 
   faSquarePlus = faSquarePlus;
 
@@ -26,13 +31,24 @@ export class EmployeesListComponent {
         this._router.navigateByUrl(`employees/${event.id}`);
         break;
       case 'delete':
-        this.deleteItem(event.id);
+        this._deleteItem(event.id);
     }
   }
 
-  deleteItem(id: number): void {
+  private _deleteItem(id: number): void {
+    const modalRef = this._modalService.open(ConfirmationModalComponent, {
+      centered: true,
+    });
+
+    modalRef.result.then((e) => {
+      if (e) this._confirmDelete(id);
+    });
+  }
+
+  private _confirmDelete(id: number) {
     this.employeesService.employees = this.employeesService.employees.filter(
       (e) => e.id !== id
     );
+    this._toastr.success('Delete SuccessfullyS!', 'Success');
   }
 }
