@@ -45,6 +45,14 @@ export class EmployeesListComponent implements OnInit {
     }
   }
 
+  doSeach(event: any) {
+    this.employees.set(
+      this._employeesService.employees.filter((e) =>
+        e.name.toLowerCase().includes(event.target.value.toLowerCase())
+      )
+    );
+  }
+
   private _deleteItem(id: number): void {
     const modalRef = this._modalService.open(ConfirmationModalComponent, {
       centered: true,
@@ -69,6 +77,8 @@ export class EmployeesListComponent implements OnInit {
     this._employeesService.employees = this._employeesService.employees.filter(
       (e) => e.id !== id
     );
+
+    this.employees.set(this._employeesService.employees);
     this._toastr.success('Delete SuccessfullyS!', 'Success');
   }
 }
