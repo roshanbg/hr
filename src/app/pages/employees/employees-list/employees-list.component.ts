@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { EmployeesService } from '../../../service/employees.service';
 import { Router, RouterLink } from '@angular/router';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import { ToolsComponent } from '../../../components/tools/tools.component';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from '../../../components/confirmation-modal/confirmation-modal.component';
+import { Employees } from '../../../../model/employees.model';
 
 @Component({
   selector: 'app-employees-list',
@@ -14,13 +15,18 @@ import { ConfirmationModalComponent } from '../../../components/confirmation-mod
   templateUrl: './employees-list.component.html',
   styleUrl: './employees-list.component.scss',
 })
-export class EmployeesListComponent {
-  employeesService = inject(EmployeesService);
+export class EmployeesListComponent implements OnInit {
+  private _employeesService = inject(EmployeesService);
   private _router = inject(Router);
   private _modalService = inject(NgbModal);
   private _toastr = inject(ToastrService);
 
   faSquarePlus = faSquarePlus;
+  employees = signal<Employees[]>([]);
+
+  public ngOnInit(): void {
+    this.employees.set(this._employeesService.employees);
+  }
 
   takeAction(event: { id: number; type: string }): void {
     switch (event.type) {
@@ -50,7 +56,7 @@ export class EmployeesListComponent {
   }
 
   private _resetItem(id: number): void {
-    const employee = this.employeesService.employees.find((e) => e.id === id);
+    const employee = this._employeesService.employees.find((e) => e.id === id);
     if (!employee) return;
 
     employee.roles.forEach((e) => {
@@ -60,7 +66,7 @@ export class EmployeesListComponent {
   }
 
   private _confirmDelete(id: number) {
-    this.employeesService.employees = this.employeesService.employees.filter(
+    this._employeesService.employees = this._employeesService.employees.filter(
       (e) => e.id !== id
     );
     this._toastr.success('Delete SuccessfullyS!', 'Success');

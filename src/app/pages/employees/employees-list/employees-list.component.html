@@ -20,7 +20,7 @@
     </tr>
   </thead>
   <tbody>
-    @for (item of employeesService.employees; track item) {
+    @for (item of employees(); track item) {
     <tr>
       <td>{{ item.name }}</td>
       <td>{{ item.email }}</td>
